@@ -5,11 +5,12 @@ RUN   apk --no-cache upgrade && \
         git \
         cmake \
         libuv-dev \
+        openssl-dev \
         build-base && \
       git clone https://github.com/xmrig/xmrig && \
       cd xmrig && \
       mkdir build && \
-      cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OF . && \
+      cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF . && \
       make && \
       apk del \
         build-base \
@@ -17,4 +18,6 @@ RUN   apk --no-cache upgrade && \
         git
 USER miner
 WORKDIR    /xmrig
+ENV HTTP_PROXY ""
+ENV HTTPS_PROXY ""
 ENTRYPOINT  ["./xmrig"]
